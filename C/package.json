@@ -1,0 +1,17 @@
+{
+  "name": "servicec",
+  "version": "1.0.0",
+  "description": "Node.js Service C",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "axios": "^0.21.1",
+    "@opentelemetry/api": "^1.0.3",
+    "@opentelemetry/node": "^0.24.0",
+    "@opentelemetry/instrumentation-express": "^0.24.0",
+    "@opentelemetry/instrumentation-http": "^0.24.0"
+  }
+}

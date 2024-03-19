@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serviceb
+  namespace: abcd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: serviceb
+  template:
+    metadata:
+      labels:
+        app: serviceb
+    spec:
+      containers:
+      - name: serviceb
+        image: serviceb:v1.0
+        ports:
+        - containerPort: 80
+        env:
+          - name: DT_API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: dynatrace-secret
+                key: DT_API_TOKEN
+          - name: OTEL_EXPORTER_OTLP_ENDPOINT
+            value: "https://bmm59542.dev.dynatracelabs.com/api/v2/otlp"
+          - name: OTEL_EXPORTER_OTLP_HEADERS
+            value: "Authorization=Api-Token $(DT_API_TOKEN)"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: serviceb
+  namespace: abcd
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: serviceb
